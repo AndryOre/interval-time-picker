@@ -1,34 +1,54 @@
 import { useState } from 'react';
-import reactLogo from './assets/react.svg';
-import viteLogo from '/vite.svg';
 import './App.css';
-import { Button } from '@/components';
+import { IntervalTimePicker } from '@/components';
 
 function App() {
-	const [count, setCount] = useState(0);
+	const [interval, setInterval] = useState({
+		hours: 1,
+		minutes: 30,
+		seconds: 0,
+	});
+	const [selectedPreset, setSelectedPreset] = useState('1');
+
+	const presets = [
+		{
+			id: '1',
+			value: '1',
+			label: '1 Hour',
+			duration: { hours: 1, minutes: 0, seconds: 0 },
+		},
+		{
+			id: '2',
+			value: '2',
+			label: '6 Hours',
+			duration: { hours: 6, minutes: 0, seconds: 0 },
+		},
+		{
+			id: '3',
+			value: '3',
+			label: '12 Hours',
+			duration: { hours: 12, minutes: 0, seconds: 0 },
+		},
+		{
+			id: '4',
+			value: '4',
+			label: '1 Day',
+			duration: { hours: 24, minutes: 0, seconds: 0 },
+		},
+		{ id: 'custom', value: 'custom', label: 'Custom' },
+	];
 
 	return (
 		<>
-			<div>
-				<a href="https://vite.dev" target="_blank">
-					<img src={viteLogo} className="logo" alt="Vite logo" />
-				</a>
-				<a href="https://react.dev" target="_blank">
-					<img src={reactLogo} className="logo react" alt="React logo" />
-				</a>
-			</div>
-			<h1>Vite + React</h1>
-			<div className="card">
-				<Button onClick={() => setCount((count) => count + 1)}>
-					count is {count}
-				</Button>
-				<p>
-					Edit <code>src/App.tsx</code> and save to test HMR
-				</p>
-			</div>
-			<p className="read-the-docs">
-				Click on the Vite and React logos to learn more
-			</p>
+			<IntervalTimePicker
+				interval={interval}
+				setInterval={setInterval}
+				presets={presets}
+				selectedPreset={selectedPreset}
+				onPresetChange={setSelectedPreset}
+				minInterval={{ hours: 0, minutes: 5, seconds: 0 }}
+				maxInterval={{ hours: 24, minutes: 0, seconds: 0 }}
+			/>
 		</>
 	);
 }
